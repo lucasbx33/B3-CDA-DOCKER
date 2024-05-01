@@ -1,5 +1,5 @@
 <?php
-    $host = "db";
+    $host = "mysql_exo_docker";
     $username = "root";
     $password = "root";
     $db = "gestion_produits";

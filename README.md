@@ -19,3 +19,25 @@ L'application permet de :
 - Modifier les produits
 - Supprimer les produits
 - Pour chaque produit, il est possible d'ajouter autant de photos que nécessaire
+
+# Exercice 1
+docker network create exo_network
+
+docker build -t exo_docker_mysql -f dockerfile .
+docker build -t exo_docker_php -f dockerfile .
+
+docker run -d --name app_php_docker --network exo_network -p 80:80 exo_docker_php
+docker run -d --name mysql_exo_docker --network exo_network -p 3306:3306 exo_docker_mysql
+
+# Exercice 2
+
+docker-compose up --build -d
+
+# Exercice 3
+
+DEV:
+docker-compose -f docker-compose.dev.yml up --build -d
+
+PROD:
+docker-compose up --build -d
+

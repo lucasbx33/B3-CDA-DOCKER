@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./www/
+      dockerfile: dockerfile.php
+    image: exo_docker_php:${TAG:-latest}
+    container_name: app_php_docker
+    ports:
+      - "80:80"
+    networks:
+      - exo_network
+
+  db:
+    build:
+      context: ./database/
+      dockerfile: dockerfile.mysql
+    image: exo_docker_mysql:${TAG:-latest}
+    container_name: mysql_exo_docker
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: gestion_produits
+    networks:
+      - exo_network
+
+networks:
+  exo_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local

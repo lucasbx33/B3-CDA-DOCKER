@@ -1,0 +1,8 @@
+FROM mysql:8.3
+
+COPY ./gestion_produits.sql /docker-entrypoint-initdb.d/
+
+ENV MYSQL_DATABASE=gestion_produits
+ENV MYSQL_ROOT_PASSWORD=root
+
+EXPOSE 3306
