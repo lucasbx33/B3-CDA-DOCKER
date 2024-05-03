@@ -43,6 +43,6 @@ docker-compose up --build -d
 
 # Exercice 4
 
-docker build -t exo_docker_mysql -f ./database/dockerfile.postgres .
+branche "postgreSQL"
 
 docker-compose up --build -d
