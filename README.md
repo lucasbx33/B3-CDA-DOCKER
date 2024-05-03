@@ -1,3 +1,5 @@
+# REYNAUD LUCAS
+
 # GESTION PRODUITS
 
 ## Prérequis
@@ -41,3 +43,8 @@ DEV:
 PROD:
 - docker-compose up --build -d
 
+# Exercice 4
+
+branche "postgreSQL"
+
+docker-compose up --build -d
