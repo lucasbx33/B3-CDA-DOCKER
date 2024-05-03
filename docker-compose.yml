@@ -15,16 +15,17 @@ services:
   db:
     build:
       context: ./database/
-      dockerfile: dockerfile.mysql
-    image: exo_docker_mysql:${TAG:-latest}
-    container_name: mysql_exo_docker
+      dockerfile: dockerfile.postgres
+    
+    container_name: postgres_exo_docker
     ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
+      - "5432:5432"
+
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: gestion_produits
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: postgres
+      POSTGRES_DB: gestion_produits
+    
     networks:
       - exo_network
 
@@ -33,5 +34,5 @@ networks:
     driver: bridge
 
 volumes:
-  mysql_data:
+  postgres_data:
     driver: local

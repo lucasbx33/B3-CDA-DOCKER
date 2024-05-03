@@ -1,9 +1,15 @@
 <?php
-    $host = "mysql_exo_docker";
-    $username = "root";
+    $host = "postgres_exo_docker";
+    $username = "postgres";
     $password = "root";
     $db = "gestion_produits";
+    $port = 5432;
 
-    $link = mysqli_connect($host,$username,$password,$db) or die ("Erreur de connexion à la base de données.");
-    mysqli_set_charset($link,"utf8");
+    try {
+        $dsn = "pgsql:host=$host;port=$port;dbname=$db;";
+        $conn = new PDO($dsn, $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        die("Erreur de connexion à la base de données: " . $e->getMessage());
+    }
 ?>

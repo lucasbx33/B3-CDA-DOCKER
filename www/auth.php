@@ -1,26 +1,25 @@
 <?php
-    if (isset($_POST['US_login']) and isset($_POST['US_password'])) {
+    if (isset($_POST['US_login']) && isset($_POST['US_password'])) {
         session_start();
         include 'connect.php';
 
-        ini_set('display_errors', '1');
+        $US_login = $_POST['US_login'];
+        $US_password = $_POST['US_password'];
 
-        $US_login = mysqli_real_escape_string($link,$_POST['US_login']);
-        $US_password = mysqli_real_escape_string($link,$_POST['US_password']);
+        $hashed_password = hash('sha256', $US_password);
 
-        $sql = "SELECT * FROM utilisateurs WHERE US_login = '$US_login' AND US_password = SHA2('$US_password', 256)";
-        $res = mysqli_query($link,$sql);
-        if ($res != false) {
-            if (mysqli_num_rows($res) > 0) {
-                // Utilisateur trouvé dans la base
-                $utilisateur = mysqli_fetch_assoc($res);
-                $_SESSION['login'] = $utilisateur['US_login'];
-                header("Location: home.php");
-            } else {
-                header("Location: index.php");
-            }
+        $sql = "SELECT * FROM utilisateurs WHERE us_login = :login AND us_password = :hashed_password";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':login', $US_login);
+        $stmt->bindParam(':hashed_password', $hashed_password);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
+            $_SESSION['login'] = $utilisateur['us_login'];
+            header("Location: home.php");
         } else {
-            header("Location: BADUSER.html");
+            header("Location: index.php");
         }
     }
 ?>

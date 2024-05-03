@@ -23,8 +23,8 @@ L'application permet de :
 # Exercice 1
 docker network create exo_network
 
-docker build -t exo_docker_mysql -f dockerfile .
-docker build -t exo_docker_php -f dockerfile .
+docker build -t exo_docker_mysql -f ./database/dockerfile.mysql .
+docker build -t exo_docker_php -f ./www/dockerfile.php .
 
 docker run -d --name app_php_docker --network exo_network -p 80:80 exo_docker_php
 docker run -d --name mysql_exo_docker --network exo_network -p 3306:3306 exo_docker_mysql
@@ -41,3 +41,8 @@ docker-compose -f docker-compose.dev.yml up --build -d
 PROD:
 docker-compose up --build -d
 
+# Exercice 4
+
+docker build -t exo_docker_mysql -f ./database/dockerfile.postgres .
+
+docker-compose up --build -d
